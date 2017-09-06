@@ -1,0 +1,139 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Ext框架设计</title>
+    <link rel="stylesheet" type="text/css" href="../ext_frame/fa/css/extend.css">
+    <script type="text/javascript" src="../ext_frame/ext_frame.js"></script>
+    <script type="text/javascript">
+            // E.basePath = "http://192.168.1.215:83/frame/";
+            E.onReady(function(){
+                E.basePath = "http://192.168.1.84/ext_frame/"
+                E.createView({
+                    xtype: 'panel',
+                    layout: 'border',
+                    border: true,
+                    frame: true,
+                    title: '后台管理系统',
+                    items: [{
+                        xtype: 'toolbar',
+                        region: 'north',
+                        height: 50,
+                        items: [{
+                            xtype: 'image',
+                            src: '../../ext_frame/img/logo.png',
+                            width: 150
+                        }, '->',
+                        {
+                            xtype: 'splitbutton',
+                            text:'您好，admin',
+                            menu: [{
+                                text:'个人中心',
+                                url: 'example/set.html',
+                                handler: function(center) {
+                                    E['iframeTabPanel'].open(center.text,E.basePath+center.url);
+                                }
+                            },{
+                                text:'设置',
+                                url: 'example/set.html',
+                                handler: function(center) {
+                                    E['iframeTabPanel'].open(center.text,E.basePath+center.url);
+                                }
+                            }],
+                            style: {
+                                margin: '0 5 0 0'
+                            }
+                        },'-',{
+                            xtype: 'button',
+                            text: '修改密码',
+                            arrowCls: 'topbarBtn',
+                            handler: function() {
+                                E.show({
+                                    title: '修改密码',
+                                    layout: 'border',
+                                    items: [{
+                                        id : 'changePwd',
+                                        region : 'north',
+                                        xtype : 'EForm',
+                                        _labelWidth:80,
+                                        width: '90%',
+                                        region:'center',
+                                        defaults: {
+                                            margin: '0 0 10 0',
+                                            inputType: 'password'
+                                        }, //defaults统一设置items的属性，不用重复在每个items中设置
+                                        _items: [
+                                            {name:'oldPwd',text:'原密码'},
+                                            {name:'newPwd',text:'新密码'},
+                                            {name:'affimPwd',text:'确认密码'},
+                                        ],
+                                        _submit : {
+                                            url : 'http://192.168.1.215:8080/yunpay_v2/test/testformsubmit',//提交地址
+                                            param : {d:new Date()},
+                                            success : function(){
+                                                alert('suc');
+                                            },
+                                            fail : function(err){
+                                                alert(err);
+                                            }
+                                        },
+                                    }]
+                                },{
+                                    width:400,height:200   //宽高是show方法后面的参数，如果为json格式，定义宽高，也可分别设置
+                                });
+                            }
+                        },'-',{
+                            xtype: 'button',
+                            text: '退出',
+                            arrowCls: 'topbarBtn',
+                            handler : function(){
+                                E.confirm('确定要退出登录','退出',function(btn){
+                                    E.alert(btn);
+                                });
+                            }
+                        }]
+                    },{
+                        id: 'menuTree',
+                        xtype: 'EForm',
+                        width: 250,
+                        region: 'west',
+                        _store : [
+                            {id:9999,parentId:0,text:'ExtJs4中文API文档',url:'extjs4api/index.html'},
+                            {id:9998,parentId:0,text:'dateFormat格式',key:'dateFormat',url:'api/dateFormat.html'},
+                            {id:9997,parentId:0,text:'icon列表',key:'icon',url:'api/icon.html'},
+                            {id:9996,parentId:0,text:'设置',key:'set',url:'example/set.html'},
+                            {id:1,parentId:0,text:'框架',url:'api/index.html',expanded:true},
+                            {id:12,parentId:1,text:'框架说明',url:'api/index.html'},
+                            {id:10,parentId:1,text:'基础方法',url:'api/base.html'},
+                            {id:11,parentId:1,text:'主视图类 | EView',key:'EView',url:'api/view.html'},
+                            {id:2,parentId:0,text:'框架组件',expanded:true},
+                            {id:20,parentId:2,text:'树 | ETree',key:'ETree',url:'api/tree.html'},
+                            {id:21,parentId:2,text:'iframe面版 | EIFrameTabPanel',key:'EIFrameTabPanel',url:'api/iframeTabPanel.html'},
+                            {id:23,parentId:2,text:'工具栏 | EToolbar',key:'EToolbar',url:'api/toolbar.html'},
+                            ],
+                        //_store : tree,
+                        _storeReflect : {//对数据的映射
+                            id : 'id',
+                            parent : 'parentId',
+                            text : 'text'
+                        },
+                        _click : function(record){//单击事件
+                            if(!record.url) return ;
+                            E['iframeTabPanel'].open(record.text,E.basePath+record.url);
+                        }
+                    },{
+                        //右侧的面板
+                        id:'iframeTabPanel',
+                        xtype : 'EIFrameTabPanel',
+                        region : 'center',
+                        //_init : ['测试','http://www.baidu.com']
+                        _init : [{
+                            title : '框架说明',
+                            url : E.basePath + "/example/index_main.html"
+                        }]
+                    }]
+                })
+            });
+        </script>
+    </head>
+
+    </html>

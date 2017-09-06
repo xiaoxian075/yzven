@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Ext框架设计</title>
+        <link rel="stylesheet" type="text/css" href="../ext_frame/fa/css/extend.css">
+        <script type="text/javascript" src="../ext_frame/ext_frame.js"></script>
+        <script type="text/javascript">
+            // E.basePath = "http://192.168.1.215:83/frame/";
+            E.onReady(function(){
+                E.basePath = "http://192.168.1.84/ext_frame/"
+                E.createView({
+                    items: [{
+                        id : 'textpanel',
+                        padding: '10',
+                        frame: true,
+                        region: 'center',
+                        items: [{
+                            xtype: 'EForm',
+                            _columns:1,
+                            layout: 'vbox',
+                            _labelWidth: 100,
+                            _itemWidth: 400,  // 每个表单的宽度 
+                            _okText: '确认修改',
+                            _cancleFn: false,  //取消按钮去掉
+                            height: 500,
+                            defaults: {
+                                margin: '0 0 10 0',
+                            },
+                            _items:[
+                                {name:'userName',text:'用户名',readOnly:true,border:0,Placeholder: '请输入用户名'},
+                                {
+                                   name:'imgfile',text:'头像',imgfile:'',value: 'http://192.168.1.215:83/frame/img/1.jpg',
+                                },
+                                {name:'phone',text:'手机'},
+                                {name:'email',text:'邮箱',vtype: 'email'},
+                                {name:'phone',text:'手机'},
+                            ],
+                            _data: {
+                                userName:'admin',
+                                pic:'http://192.168.1.215:83/frame/img/2.jpg',
+                                email: '329433655@qq.com',
+                                phone: '18034534546',
+                            }
+                        }]
+                    }]
+                })
+            });
+        </script>
+    </head>
+</html>

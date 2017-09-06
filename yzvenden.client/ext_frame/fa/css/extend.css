@@ -1,0 +1,56 @@
+.x-tree-lines .x-tree-elbow,.x-tree-lines .x-tree-elbow-end,.x-tree-lines .x-tree-elbow-line,.x-tree-lines .x-tree-elbow{
+	// background: none!important;
+	// outline: none
+}
+.treeStyle .x-grid-body{
+	// background: #eee;
+}
+.treeStyle .x-grid-cell-inner-treecolumn{
+	padding:5px ;
+	font-size: 13px;
+}
+.treeStyle .x-grid-cell-inner-treecolumn:hover{
+	// background: #fff;
+	// color: #333;
+}
+.treeStyle .x-grid-item-selected{
+	// background: #46659B;
+	// color: #fff;
+}
+.treeStyle .x-grid-item-focused{
+	// color: inherit;
+	// background: inherit;
+}
+.treeStyle .x-grid-tree-node-expanded{
+	// background: #46659B;
+	// color: #fff;
+	font-size: 14px;
+}
+.treeStyle .x-grid-tree-node-expanded .x-grid-cell-inner-treecolumn{
+	// background: #46659B;
+	// color: #fff;
+}
+.treeStyle .x-grid-tree-node-leaf{
+	// background: #eee;
+	font-size: 12px;
+}
+.treeStyle .x-tree-icon-leaf{
+	// background: none
+}
+.treeStyle .x-grid-tree-node-leaf .x-tree-elbow-img{
+	// width: 0!important
+}
+.treeStyle .x-grid-item-selected .x-tree-node-text{
+	// color: #333;
+}
+.treeStyle .x-grid-row{
+	// background: #46659B;
+	// color: #fff;
+}
+.treeStyle .x-grid-tree-node-leaf.x-grid-row{
+	// color: #333;
+	// background: #eee
+}
+.x-grid-with-row-lines .x-grid-item{
+	padding:3px !important
+}

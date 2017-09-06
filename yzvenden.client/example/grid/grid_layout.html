@@ -1,0 +1,145 @@
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>表格用法</title>
+        <link rel="stylesheet" href="../ext_frame/fa/css/font-awesome.min.css">
+        <script type="text/javascript" src="../ext_frame/ext_frame.js"></script>
+        <script type="text/javascript">
+            E.basePath = "http://192.168.1.215:83/frame/";
+            E.onReady(function(){
+                E.createView({
+                    items:[{
+                        region : 'center',//这里需要指定region为center。因为panel不是自定义组件
+                        xtype : 'panel',
+                        layout : 'border',
+                        tbar : {
+                            xtype : 'EToolbar',
+                            id : 'toolbarId',//工具栏Id
+                            _items : [//条件搜索
+                                '文本1',
+                                '文本2',
+                                {name:'id',text:'ID',xtype:'numberfield'},
+                                '-',//分割符
+                                {name:'nickname',text:'昵称'},
+                                '/',
+                                {name:'aaa',text:'无效配置',value:'默认值'},
+                                '/',//换行符
+                                {name:'startTime',text:'开始时间',dateFormat:'Y-m-d'},
+                                {name:'endTime',text:'',dateFormat:'Y-m-d'},
+                                {text:'搜索(获取搜索栏数据的示例)',handler:function(){
+                                    var search = E['testGrid'].getSearch();
+                                    E.alert(JSON.stringify(search),function(){
+                                        E.alert('id=' + E['testGrid'].getSearch('id'));
+                                    });
+                                }},
+                                {
+                                    text:'搜索',
+                                    tooltip:'该搜索会根据配置进行判断，如果是远程加载会自动加载，如果数据是本地的，则会对本地数据进行过滤',
+                                    handler:function() {
+                                        E['testGrid'].search();//执行搜索
+                                    }
+                                },
+                                '-',
+                                '-',
+                                '/',
+                                '->',//下面所有的元素向右移
+                                {text:'更新文本1',handler:function(){
+                                    E['testGrid'].searchItem(1).setText('文本1更新了！');
+                                    E['testGrid'].searchItem(2).setText('文本2恢复！');
+                                }},{
+                                    text : '更新文本2,恢复文本1',
+                                    handler:function(){
+                                        E['testGrid'].searchItem(1).setText('文本1恢复！');
+                                        E['testGrid'].searchItem(2).setText('文本2更新！');
+                                    }
+                                },
+                                '/',
+                                {
+                                    text:'设置ID值',
+                                    handler:function(){
+                                        E['testGrid'].searchItem('id').setValue(11);
+                                        E['testGrid'].searchItem('id').setText('IDNewName');
+                                        E['testGrid'].searchItem('nickname').setText('新昵称');
+                                    }
+                                },{
+                                    text:'设置昵称',
+                                    handler:function(){
+                                        E['testGrid'].searchItem('nickname').setValue('n1');
+                                    }
+                                }
+                            ]
+                        },
+
+                        items : [{
+                            region : 'center',
+                            id : 'testGrid',
+                            xtype : 'EGrid',
+                            _searchBind : 'toolbarId',//绑定搜索栏
+                            _fields : [//字段配置
+                                {id:{text:'ID',filter:'number'}},
+                                {nickname:{text:'昵称',filter:'string'}},
+                                {lv:'等级',desc:'描述'},//扩展用法
+                                {time:{text:'时间',dateFormat:'Y-m-d H:i:s',width:260,filter:'date'}},
+                                {_action:[{//事件按钮字段
+                                    icon : 'delete',
+                                    handler : function(record){
+                                        alert(record.id);
+                                    }
+                                },{
+                                    icon : 'add',
+                                    tooltip:'这是鼠标移上去的提示消息',
+                                    handler : function(record){
+                                        alert('add' + record.id);
+                                    }
+                                }]}
+                            ],//条件搜索结束
+                            //设置展开行
+                            _rowexpander : [ '<p><b>id:</b> {id}</p>',
+                                '<p><b>lv:</b> {lv:this.formatChange}</p>',
+                                {
+                                    formatChange: function(v){
+                                        var color = v >= 0 ? 'green' : 'red';
+                                        return '<span style="color: ' + color + ';">' + Ext.util.Format.usMoney(v) + '</span>';
+                                    }
+                                }],//开启展开数据
+                            //_group : 'nickname',//分组
+                            _autoLoad : true,//初始化加载
+                            //_paging : true,//分页
+                            _paging : {//分页配置
+                                pageSize : 100,
+                                datas : 'datas',
+                                totalCount : 'totalCount'
+                            },
+                            //_store : E.basePath + "grid.json"
+                            _store : 'http://192.168.1.215:8080/yunpay_v2/test/test',
+                            //_store : E.basePath + "grid2.json"
+                        },{
+                            region : 'west',
+                            width : 150,
+                            title : 'west'
+                        },{
+                            region : 'south',
+                            height : 200,
+                            //title : 'south',
+                            layout : 'border',
+                            items : [{
+                                region : 'center',
+                                xtype : 'panel',
+                                title : 'center'
+                            },{
+                                region : 'east',
+                                xtype : 'panel',
+                                width : 200,
+                                title : 'east'
+                            }]
+                        },{
+                            region : 'east',
+                            width : 200,
+                            title : 'east'
+                        }]
+                    }]
+                });
+            });
+        </script>
+    </head>
+</html>

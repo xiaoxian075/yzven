@@ -1,0 +1,69 @@
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Ext框架设计</title>
+        <script type="text/javascript" src="../ext_frame/ext_frame.js"></script>
+        <script type="text/javascript">
+            E.basePath = "http://192.168.1.215:83/frame/";
+            E.onReady(function(){
+                E.createView({
+                    items:[{
+                        region : 'center',
+                        id : 'textpanel',
+                        xtype : 'panel',
+                        tbar : {
+                            id : 'toolbarId',
+                            xtype : 'EToolbar',
+                            _items : [//条件搜索
+                                {text:'搜索(获取搜索栏数据的示例)',handler:function(){
+                                    var search = E['toolbarId'].getValue();
+                                    E.alert(JSON.stringify(search));
+                                }},
+                                {name:'test',text:'普通',combo:[[1,'1show'],[2,'2show']]},
+                                {name:'combo',text:'下拉',combo:[
+                                        [1,'显示1'],[2,'显示2'],
+                                        {
+                                            //最后一位，可以声明内置方法
+                                            _filter : function(key,val){
+                                                return true
+                                            },//过滤
+                                            _init : [[1111,'请选择']],//格式必须与原数据格式一致
+                                            _append : [[3,'kkkkk']]
+                                        }
+                                ],value:1},
+                                {name:'combo2',text:'下拉2',combo:[
+                                    'id','name',//首二位必须写明key和val的字段
+                                    {id:0,name:'这会被过滤'},
+                                    {id:1,name:'id1'},
+                                    {id:2,name:'id2'},
+                                    {//最后一位，可以声明内置方法，如，初化数据配置，追加数据配置，过滤等
+                                        _filter : function(key,val){
+                                            return key > 1;
+                                        },//过滤
+                                        _init : [{id:222,name:'请选择'}],
+                                        _append : [{id:3,name:'追加'}]
+                                    }
+                                ]},
+                                {name:'ajaxcombo',text:'异步下拉',
+                                    multiSelect:true,//多选
+                                    combo:[
+                                    'id','nickname','http://192.168.1.215:8080/yunpay_v2/test/testcombo',
+                                        'nickname',
+                                        {//最后一位，可以声明内置方法，如，初化数据配置，追加数据配置，过滤等
+                                            _filter : function(key,val){
+                                                return true;
+                                                //return key < 0;
+                                            },//过滤
+                                            _init : [{"id":-99,"time":1481076648,"desc":"desc","nickname":"昵称-99","lv":4}],
+                                            _append : [{"id":-100,"time":1481076648,"desc":"desc","nickname":"追加-100","lv":4}],
+                                        }
+                                ]}
+                            ]
+                        }
+                    }]
+                });
+            });
+        </script>
+    </head>
+
+</html>

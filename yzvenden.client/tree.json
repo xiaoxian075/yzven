@@ -1,0 +1,23 @@
+[
+    {id:9999,parentId:0,text:'ExtJs4中文API文档',url:'extjs4api/index.html'},
+    {id:9998,parentId:0,text:'dateFormat格式',key:'dateFormat',url:'api/dateFormat.html'},
+    {id:9997,parentId:0,text:'icon列表',key:'icon',url:'api/icon.html'},
+    // {id:9996,parentId:0,text:'设置',key:'set',url:'example/set.html'},
+    {id:1,parentId:0,text:'框架',url:'api/index.html',expanded:true},
+    {id:12,parentId:1,text:'框架说明',url:'api/index.html'},
+    {id:10,parentId:1,text:'基础方法',url:'api/base.html'},
+    {id:11,parentId:1,text:'主视图类 | EView',key:'EView',url:'api/view.html'},
+    {id:2,parentId:0,text:'框架组件',expanded:true},
+    {id:20,parentId:2,text:'树 | ETree',key:'ETree',url:'api/tree.html'},
+    {id:21,parentId:2,text:'iframe面版 | EIFrameTabPanel',key:'EIFrameTabPanel',url:'api/iframeTabPanel.html'},
+    {id:23,parentId:2,text:'工具栏 | EToolbar',key:'EToolbar',url:'api/toolbar.html'},
+    {id:22,parentId:2,text:'表格 | EGrid',key:'EGrid',url:'api/grid.html'},
+
+    {id:299,parentId:2,text:'表单',expanded:true},
+    {id:2990,parentId:299,text:'表单 | EForm',key:'EForm',url:'api/form.html'},
+    {id:2991,parentId:299,text:'表单 | 下拉框 | ECombo',key:'ECombo',url:'api/form.combo.html'},
+    {id:2992,parentId:299,text:'表单 | 多选框 | ECheckbox',key:'ECheckbox',url:'api/form.checkbox.html'},
+    {id:2993,parentId:299,text:'表单 | 单选框 | ERadio',key:'ERadio',url:'api/form.radio.html'},
+
+    {id:298,parentId:2,text:'图片 | EImg',key:'EImg',url:'api/img.html'}
+]

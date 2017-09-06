@@ -1,0 +1,12 @@
+/*树，展开*/
+.x-grid-tree-node-expanded .x-tree-icon-parent{background-image : url(images/folder_go.png);}
+/*树，未展开*/
+.x-tree-icon-parent{background-image : url(images/folder.png);}
+/*树，叶子*/
+.x-tree-icon-leaf{background-image : url(images/page_white.png);}
+/*树，加号*/
+.x-tree-lines .x-grid-tree-node-expanded .x-tree-elbow-plus,
+.x-tree-lines .x-grid-tree-node-expanded .x-tree-elbow-end-plus{background-image : url(images/minus.png);}
+/*树，加号*/
+.x-tree-lines .x-tree-elbow-plus,
+.x-tree-lines .x-tree-elbow-end-plus{background-image : url(images/plus.png);}

@@ -1,0 +1,51 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>后台管理系统</title>
+    <!--<link rel="stylesheet" type="text/css" href="../ext_frame/fa/css/extend.css">-->
+    <script type="text/javascript" src="../ext_frame/ext_frame.js"></script>
+    <script type="text/javascript">
+        E.onReady(function() {
+            E.basePath = "http://localhost:63343/ext_frame/"
+            E.createView({
+                xtype: 'panel',
+                layout: 'center',
+                items: [
+                    {
+                        xtype : 'panel',
+                        width : 500,
+                        height : 200,
+                        border : true,
+                        layout : 'fit',
+                        items : [
+                            {
+                            id: 'login',
+                            xtype: 'EForm',
+                            _labelWidth: 80,
+                            width: '90%',
+                            region: 'center',
+                            defaults: {
+                                margin: '0 0 10 0'
+                            }, //defaults统一设置items的属性，不用重复在每个items中设置
+                            _items: [
+                                {name: 'loginName', text: '用户名', inputType: 'text'},
+                                {name: 'loginPwd', text: '密码', inputType: 'password'}
+                            ],
+                            _submit: {
+                                url: 'http://192.168.1.27:8087/admin!1/m1/v0',//提交地址
+                                param: {d: new Date()},
+                                _finish : function () {
+                                    alert('suc');
+                                },
+                                method : 'post'
+                            },
+                        }
+                        ]
+                    }
+                    ]
+            });
+        });
+    </script>
+</head>
+
+</html>

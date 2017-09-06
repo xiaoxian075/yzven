@@ -1,0 +1,6 @@
+{
+  totalCount : 300,
+  datas : [
+    {id:1,nickname:'昵称1',lv:1,desc:'描述1',time:new Date()}
+  ]
+}

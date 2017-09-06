@@ -1,0 +1,131 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Ext框架设计</title>
+    <link rel="stylesheet" type="text/css" href="../ext_frame/fa/css/extend.css">
+    <script type="text/javascript" src="../ext_frame/ext_frame.js"></script>
+    <script type="text/javascript">
+            E.onReady(function(){
+                E.basePath = "http://localhost:63343/ext_frame/"
+                E.createView({
+                    xtype: 'panel',
+                    items: [
+                        {
+                        // 顶部
+                        xtype: 'toolbar',
+                        region: 'north',
+                        height: 50,
+                        items: [{
+                            xtype: 'image',  //图片组件
+                            src: '../../ext_frame/img/logo.png',
+                            width: 150
+                        }, '->',
+                        {
+                            xtype: 'splitbutton',
+                            text:'您好，admin',
+                            menu: [{
+                                text:'个人中心',
+                                url: 'example/set.html',
+                                handler: function(center) {
+                                    E['iframeTabPanel'].open(center.text,E.basePath+center.url);
+                                }
+                            },{
+                                text:'设置',
+                                url: 'example/set.html',
+                                handler: function(center) {
+                                    E['iframeTabPanel'].open(center.text,E.basePath+center.url);
+                                }
+                            }],
+                            style: {
+                                margin: '0 5 0 0'
+                            }
+                        },'-',{
+                            xtype: 'button',
+                            text: '修改密码',
+                            arrowCls: 'topbarBtn',
+                            handler: function() {
+                                E.show({
+                                    title: '修改密码',
+                                    layout: 'border',
+                                    items: [{
+                                        id : 'changePwd',
+                                        xtype : 'EForm',
+                                        _labelWidth:80,
+                                        width: '90%',
+                                        region:'center',
+                                        defaults: {
+                                            margin: '0 0 10 0',
+                                            inputType: 'password'
+                                        }, //defaults统一设置items的属性，不用重复在每个items中设置
+                                        _items: [
+                                            {name:'oldPwd',text:'原密码'},
+                                            {name:'newPwd',text:'新密码'},
+                                            {name:'affimPwd',text:'确认密码'},
+                                        ],
+                                        _submit : {
+                                            url : 'http://192.168.1.215:8080/yunpay_v2/test/testformsubmit',//提交地址
+                                            param : {d:new Date()},
+                                            success : function(){
+                                                alert('suc');
+                                            },
+                                            fail : function(err){
+                                                alert(err);
+                                            }
+                                        },
+                                    }]
+                                },{
+                                    width:400,height:200   //宽高是show方法后面的参数，如果为json格式，定义宽高，也可分别设置
+                                });
+                            }
+                        },'-',{
+                            xtype: 'button',
+                            text: '退出',
+                            arrowCls: 'topbarBtn',
+                            handler : function(){
+                                E.confirm('确定要退出登录','退出',function(btn){
+                                    E.alert(btn);
+                                });
+                            }
+                        }]
+                    },
+                        {
+                        // 左侧
+                        id: 'menuTree',
+                        xtype: 'ETree',
+                        region: 'west',
+                        cls: 'treeStyle',
+                        singleExpand: true,
+                        width: 250,
+                        title: '系统导航',
+                        _store : E.basePath + "tree.json",
+                        _storeReflect : {//对数据的映射
+                            id : 'id',
+                            parent : 'parentId',
+                            text : 'text'
+                        },
+                        _filter : {
+                            text : 'Filter',
+                            key : 'key'
+                        },
+                        _click : function(record){//单击事件
+                            console.log(E['iframeTabPanel'])
+                            if(!record.url) return ;
+                            E['iframeTabPanel'].open(record.text,E.basePath+record.url);
+                        }
+                    },{
+                        //右侧的面板
+                        id:'iframeTabPanel',
+                        xtype : 'EIFrameTabPanel',
+                        region : 'center',
+                        //_init : ['测试','http://www.baidu.com']
+                        _init : [{
+                            title : '框架说明',
+                            url : E.basePath + "/example/index_main.html"
+                        }]
+                    }]
+                })
+            });
+    </script>
+    </head>
+
+    </html>

@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>单选框</title>
+        <script type="text/javascript" src="../ext_frame/ext_frame.js"></script>
+        <script type="text/javascript">
+            E.onReady(function(){
+                E.createView({
+                    layout : 'hbox',
+                    items:[{
+                        id : 'radiogroup',
+                        xtype : 'ERadio',
+                        name : 'radio',
+                        _group : [['label','val'],['labl2','val2']],
+                        value : 'val',//默认选中val
+                    },{
+                        xtype : 'button',
+                        text : '取值',
+                        handler : function(){
+                            var val = E['radiogroup'].getValue();
+                            alert(JSON.stringify(val));
+                        }
+                    },{
+                        xtype : 'ERadio',
+                        name : 'radio2',
+                        _group : ['labelf','valf',
+                            {labelf:'我是1',valf:1},
+                            {labelf:'我是2',valf:2},
+                            {labelf:'我是3',valf:3}
+                        ],
+                        value : 1
+                    }]
+                });
+            });
+        </script>
+    </head>
+
+</html>

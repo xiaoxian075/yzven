@@ -1,0 +1,152 @@
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Ext框架设计</title>
+        <script type="text/javascript" src="../ext_frame/ext_frame.js"></script>
+        <script type="text/javascript">
+            E.basePath = "http://192.168.1.215:83/frame/";
+            E.onReady(function(){
+                E.createView({
+                    items:[{
+                        region : 'center',
+                        id : 'textpanel',
+                        xtype : 'panel',
+                        tbar : {
+                            id : 'toolbarId',
+                            xtype : 'EToolbar',
+                            _items : [//条件搜索
+                                '文本1',
+                                '文本2',
+                                {name:'id',text:'ID',xtype:'numberfield'},
+                                '-',//分割符
+                                {name:'nickname',text:'昵称'},
+                                '/',
+                                {name:'aaa',text:'无效配置',value:'默认值'},
+                                '/',//换行符
+                                {name:'startTime',text:'开始时间',dateFormat:'Y-m-d'},
+                                {name:'endTime',text:'',dateFormat:'Y-m-d'},
+                                {text:'搜索(获取搜索栏数据的示例)',handler:function(){
+                                    var search = E['toolbarId'].getValue();
+                                    E.alert(JSON.stringify(search),function(){
+                                        E.alert('id=' + E['toolbarId'].getValue('id'));
+                                    });
+                                }},
+                                {
+                                    text:'搜索',
+                                    tooltip:'该搜索会根据配置进行判断，如果是远程加载会自动加载，如果数据是本地的，则会对本地数据进行过滤',
+                                    handler:function() {
+                                        E.alert('search');
+                                    }
+                                },
+                                '-',
+                                '-',
+                                '/',
+                                '->',//下面所有的元素向右移
+                                {text:'更新文本1',handler:function(){
+                                    E['toolbarId'].getItem(1).setText('文本1更新了！');
+                                    E['toolbarId'].getItem(2).setText('文本2恢复！');
+                                }},{
+                                    text : '更新文本2,恢复文本1',
+                                    handler:function(){
+                                        E['toolbarId'].getItem(2).setText('文本1恢复！');
+                                        E['toolbarId'].getItem(1).setText('文本2更新！');
+                                    }
+                                },
+                                '/',
+                                {
+                                    text:'设置ID值',
+                                    handler:function(){
+                                        E['toolbarId'].getItem('id').setValue(11);
+                                        E['toolbarId'].getItem('id').setText('IDNewName');
+                                        E['toolbarId'].getItem('nickname').setText('新昵称');
+                                    }
+                                },{
+                                    text:'设置昵称',
+                                    handler:function(){
+                                        E['toolbarId'].getItem('nickname').setValue('n1');
+                                    }
+                                },
+                                {name:'combo',text:'下拉',combo:[
+                                        [1,'显示1'],[2,'显示2'],
+                                        {
+                                            //最后一位，可以声明内置方法
+                                            _filter : function(key,val){
+                                                return true
+                                            },//过滤
+                                            _init : [[1111,'请选择']],//格式必须与原数据格式一致
+                                            _append : [[3,'kkkkk']]
+                                        }
+                                ],value:1},
+                                {name:'combo2',text:'下拉2',combo:[
+                                    'id','name',//首二位必须写明key和val的字段
+                                    {id:0,name:'这会被过滤'},
+                                    {id:1,name:'id1'},
+                                    {id:2,name:'id2'},
+                                    {//最后一位，可以声明内置方法，如，初化数据配置，追加数据配置，过滤等
+                                        _filter : function(key,val){
+                                            return key > 1;
+                                        },//过滤
+                                        _init : [{id:222,name:'请选择'}],
+                                        _append : [{id:3,name:'追加'}]
+                                    }
+                                ]},
+                                {name:'ajaxcombo',text:'异步下拉',
+                                    multiSelect:true,//多选
+                                    combo:[
+                                    'id','nickname','http://192.168.1.215:8080/yunpay_v2/test/testcombo',
+                                        'nickname',
+                                        {//最后一位，可以声明内置方法，如，初化数据配置，追加数据配置，过滤等
+                                            _filter : function(key,val){
+                                                return true;
+                                                //return key < 0;
+                                            },//过滤
+                                            _init : [{"id":-99,"time":1481076648,"desc":"desc","nickname":"昵称-99","lv":4}],
+                                            _append : [{"id":-100,"time":1481076648,"desc":"desc","nickname":"追加-100","lv":4}],
+                                        }
+                                ]},
+                                //单个多选框，源生API
+                                {name:'checkfield',text:'check2',xtype:'checkbox',value:2},
+                                //单个单选框,源生API
+                                {name:'radio',text:'radio',xtype:'radio',value:3},
+                                '/',
+                                {
+                                    //checkbox : 封装类
+                                    name:'checkgroup',text:'多选框组',
+                                    checkbox:[
+                                        ['红','red'],['蓝','blue'],['绿','green']
+                                    ],
+                                    value:['red','green'],
+                                    //value : 'red'
+                                },
+                                {
+                                    name:'checkgroup2',text:'多选框组2',
+                                    checkbox:[
+                                        'label','val',
+                                        {label:'红',val:'red'},
+                                        {label:'黑',val:'black'},
+                                        {label:'黄',val:'yellow'}
+                                    ],
+                                    value:['red']
+                                },
+                                '-','-',
+                                '/',
+                                {text:'多选框值',handler:function(){
+                                    var search = E['toolbarId'].getValue('checkgroup');
+                                    E.alert(JSON.stringify(search));
+                                }},
+                                '/',
+                                {
+                                    name:'radiog',text:'单选',
+                                    radio : [
+                                        ['红','red'],['蓝','blue'],['绿','green']
+                                    ]
+                                }
+                            ]
+                        }
+                    }]
+                });
+            });
+        </script>
+    </head>
+
+</html>

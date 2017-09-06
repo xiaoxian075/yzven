@@ -1,0 +1,118 @@
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>表格在线编辑</title>
+        <script type="text/javascript" src="../../ext_frame/jquery-3.1.0.min.js"></script>
+        <script>
+            function refreshIFrame(){
+                $('#olineIFrame').attr('src', "grid_edit_online.html?t="+new Date());
+            }
+            function getVal(){
+                var ta = $("#onlineCode");
+                return ta.val();
+            }
+        </script>
+    </head>
+    <body>
+        <div style="width:100%;padding:5px;">
+            <textarea rows="30" cols="200" id="onlineCode">
+            {
+                id : 'testGrid',
+                xtype : 'EGrid',
+                _search : [//条件搜索
+                    '文本1',
+                    '文本2',
+                    {name:'id',text:'ID',xtype:'numberfield'},
+                    '-',//分割符
+                    {name:'nickname',text:'昵称'},
+                    '/',
+                    {name:'aaa',text:'无效配置',value:'默认值'},
+                    '/',//换行符
+                    {name:'startTime',text:'开始时间',dateFormat:'Y-m-d'},
+                    {name:'endTime',text:'',dateFormat:'Y-m-d'},
+                    {text:'搜索(获取搜索栏数据的示例)',handler:function(){
+                        var search = E['testGrid'].getSearch();
+                        E.alert(JSON.stringify(search),function(){
+                            E.alert('id=' + E['testGrid'].getSearch('id'));
+                        });
+                    }},
+                    {
+                        text:'搜索',
+                        tooltip:'该搜索会根据配置进行判断，如果是远程加载会自动加载，如果数据是本地的，则会对本地数据进行过滤',
+                        handler:function() {
+                            E['testGrid'].search();//执行搜索
+                        }
+                    },
+                    '-',
+                    '-',
+                    '/',
+                    '->',//下面所有的元素向右移
+                    {text:'更新文本1',handler:function(){
+                        E['testGrid'].searchItem(1).setText('文本1更新了！');
+                        E['testGrid'].searchItem(2).setText('文本2恢复！');
+                    }},{
+                        text : '更新文本2,恢复文本1',
+                        handler:function(){
+                            E['testGrid'].searchItem(2).setText('文本1恢复！');
+                            E['testGrid'].searchItem(1).setText('文本2更新！');
+                        }
+                    },
+                    '/',
+                    {
+                        text:'设置ID值',
+                        handler:function(){
+                            E['testGrid'].searchItem('id').setValue(11);
+                            E['testGrid'].searchItem('id').setText('IDNewName');
+                            E['testGrid'].searchItem('nickname').setText('新昵称');
+                        }
+                    },{
+                        text:'设置昵称',
+                        handler:function(){
+                            E['testGrid'].searchItem('nickname').setValue('n1');
+                        }
+                    }
+                 ],//搜索栏结束
+                _fields : [//字段配置
+                    {id:{text:'ID',filter:'number'}},
+                    {nickname:{text:'昵称',filter:'string'}},
+                    {lv:'等级',desc:'描述'},//扩展用法
+                    {time:{text:'时间',dateFormat:'Y-m-d H:i:s',width:260,filter:'date'}},
+                    {_action:[{//事件按钮字段
+                        icon : 'delete',
+                        handler : function(record){
+                            alert(record.id);
+                        }
+                    },{
+                        icon : 'add',
+                        tooltip:'这是鼠标移上去的提示消息',
+                        handler : function(record){
+                            alert('add' + record.id);
+                        }
+                    }]}
+                ],//字段配置结束
+                _rowexpander : [ '<p><b>id:</b> {id}</p>',
+                    '<p><b>lv:</b> {lv:this.formatChange}</p>',
+                    {
+                        formatChange: function(v){
+                            var color = v >= 0 ? 'green' : 'red';
+                            return '<span style="color: ' + color + ';">' + Ext.util.Format.usMoney(v) + '</span>';
+                        }
+                }],//结束rowexpander
+                _checkbox:true,
+                _autoLoad : true,//初始化加载
+                _paging : {//分页配置
+                     pageSize : 100,
+                     datas : 'datas',
+                     totalCount : 'totalCount'
+                },
+                _store : 'http://192.168.1.215:83/frame/grid.json',
+            }
+            </textarea>
+            <br />
+            <input type="button" onclick="refreshIFrame()" value=" 生成表格 ">
+        </div>
+        <div style="height: 600px;padding: 5px;width:100%;">
+            <iframe src="grid_edit_online.html" width="100%" height="100%" id="olineIFrame"></iframe>
+        </div>
+    </body>
+</html>

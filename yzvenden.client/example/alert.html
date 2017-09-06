@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>弹出</title>
+        <script type="text/javascript" src="../ext_frame/ext_frame.js"></script>
+        <script type="text/javascript">
+            E.onReady(function(){
+                E.createView({
+                    xtype : 'panel',
+                    layout : 'hbox',
+                    items:[{
+                        xtype : 'button',
+                        text : 'show',
+                        handler : function(){
+                            E.show({
+                                id : 'testGrid',
+                                xtype : 'EGrid',
+                                split : false,
+                                tbar : [
+                                    {
+                                        xtype : 'button',
+                                        text : '关闭弹出框',
+                                        handler : function(){
+                                            E['testGrid'].getShow().close();
+                                        }
+                                    }
+                                ],
+                                _fields : [//字段配置
+                                    {id:{text:'ID',filter:'number'}},
+                                    {nickname:{text:'昵称',filter:'string'}},
+                                    {lv:'等级'},
+                                    {desc:{text:'描述',width: 180}}
+                                ],//字段配置结束
+                                _store : [{id:1,nickname:'test',lv:1,desc:'这是描述'}]
+                            });
+                        }
+                    }]
+                });
+            });
+        </script>
+    </head>
+
+</html>

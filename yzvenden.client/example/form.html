@@ -1,0 +1,108 @@
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Ext框架设计</title>
+        <script type="text/javascript" src="../ext_frame/ext_frame.js"></script>
+        <script type="text/javascript">
+            E.basePath = "http://192.168.1.215:83/frame/";
+            E.onReady(function(){
+                E.show({
+                    title : 'textform',
+                    items:[{
+                        region : 'north',
+                        height : 500,
+                        xtype : 'EForm',
+                        _columns:3,
+                        _items : [//配置表单项
+                            {name:'id',text:'ID'},
+                            {name:'nickname',text:'昵称'},
+                            {name:'ttt',text:'ttt'},
+                            {name:'phone',text:'手机号',readOnly:true,border:0},
+                            {name:'address',text:'地址',col:2},//占用二列
+                            {
+                                name:'area',text:'大区域',row:3,xtype:'textarea'
+                            },//占用三行
+                            {name:'1',text:'1'},
+                            {name:'2',text:'2'},
+                            {name:'3',text:'3',readOnly:true},
+                            {name:'testAbc',text:'testAbc',id:'testId1',value:'hai'},
+                            {name:'6',text:'6',blankText:'no'},
+                            {text:'aa',name:'combo1',combo:[[1,'test1'],[2,'test2']]},
+                            //下拉框
+                            {name:'combo',text:'下拉框',combo:[
+                                'id','nickname',
+                                'http://192.168.1.215:8080/yunpay_v2/test/testcombo',
+                                'nickname','id'
+                            ]},
+                            {
+                                name:'checkgroup',text:'多选框组',
+                                checkbox:[
+                                    ['红','red'],['蓝','blue'],['绿','green']
+                                ],
+                                value:'red'
+                            },
+                            {
+                                name:'radiog',text:'单选',value:'red',_default:1,
+                                radio : [
+                                    ['红','red'],['蓝','blue'],['绿','green']
+                                ]
+                            },
+                            {name:'file',text:'文件上传',xtype:'filefield'},//原生文件上传
+                            {name:'imgfile',text:'图片上传',imgfile:''},//封装好的图片上传功能
+                            {id:'aaaaImg',name:'show',text:'显示',img:''},//图片显示
+                            {
+                                xtype:'button',text:'改变显示的图片值',
+                                handler:function(){
+                                    var img = E['aaaaImg'];
+                                    img.setSrc('http://192.168.1.215:83/frame/img/1.jpg');
+                                }
+                            },
+                            {text:'月份',name:'month',format:'Y-m'},
+                            {text:'日期',name:'date',format:'Y-m-d'}
+                        ],
+                        //表单数据
+                        _data : {
+                            id:1,nickname:'昵称',ttt:'ttt',phone:13860132592,address:'福建省厦门',
+                            area:'-asdfasdfasdfasdf-',1:1,2:2,3:3,4:4,//不定义6
+                            combo:999,//加载id=999的选项
+                            checkgroup:['red','blue'],
+                            radiog:'blue',
+                            file:'http://www.baidu.com',
+                            show:'http://192.168.1.215:83/frame/img/2.jpg',
+                        },
+                        _submit : {
+                            url : 'http://192.168.1.215:8080/yunpay_v2/test/testformsubmit',//提交地址
+                            param : {d:new Date()},
+                            success : function(){
+                                alert('suc');
+                            },
+                            fail : function(err){
+                                alert(err);
+                            }
+                        },
+                        _valid : function(){
+                            alert('自定义验证');
+                            return true;//自定义检验
+                        },
+                        //绑定，当表单提交时，同时遮盖这些组件的可用性
+                        _bind:'testGrid'//多个：['testGrid','testaAbc']
+                    },{
+                        id : 'testGrid',
+                        xtype : 'EGrid',
+                        region : 'center',
+                        split : false,
+                        _fields : [//字段配置
+                            {id:{text:'ID',filter:'number'}},
+                            {nickname:{text:'昵称',filter:'string'}},
+                            {lv:'等级',desc:'描述'},//扩展用法
+                        ],//字段配置结束
+                        _store : ''
+                    }]
+                },800,500);
+            });
+        </script>
+    </head>
+    <body>
+
+    </body>
+</html>
