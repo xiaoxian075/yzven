@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE generatorConfiguration  
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"  
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+
+<generatorConfiguration>
+
+    <!--引入配置文件-->
+    <properties resource="application.properties" />
+
+	<context id="DB2Tables" targetRuntime="MyBatis3" defaultModelType="flat">
+
+        <plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
+            <property name="searchString" value="[e|E]xample$" />
+            <property name="replaceString" value="Criteria" />
+        </plugin>
+
+         <plugin type="com.at.frame.mybatis.generator.MyPluginAdapter">
+            <property name="custom" value="classpath*:com/at/entity/custom/*" />
+        </plugin> 
+
+        <!--注释-->
+         <commentGenerator type="com.at.frame.mybatis.generator.MyCommentGenerator">
+                <property name="swagger" value="true" />
+        </commentGenerator>
+
+        <!--配置jdbc连接信息-->
+        <jdbcConnection driverClass="${spring.datasource.driverClassName}"
+                        connectionURL="${spring.datasource.url}"
+                        userId="${spring.datasource.username}"
+                        password="${spring.datasource.password}">
+            <!-- 针对oracle数据库
+            <property name="remarksReporting" value="true"></property> -->
+            <!-- 针对mysql数据库 -->
+            <property name="useInformationSchema" value="true"></property>
+        </jdbcConnection>
+
+        <javaTypeResolver><!--类型转换-->
+            <!-- 是否使用bigDecimal， false可自动转化以下类型（Long, Integer, Short, etc.） -->
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <!-- generate Model -->
+         <javaModelGenerator targetPackage="${mybatis.type-aliases-package}"
+                            targetProject="${entity.target.dir}">
+           <!--  是否在当前路径下新加一层schema,eg：fase路径com.oop.eksp.user.model， true:com.oop.eksp.user.model.[schemaName] -->
+            <property name="enableSubPackages" value="true" />
+      <!--       是否针对string类型的字段在set的时候进行trim调用 -->
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator> 
+
+        <!-- 自动生成xml
+        <sqlMapGenerator  targetPackage="wang.raye.springboot.model.mapper"
+                          targetProject="${dao.resources.dir}">
+            是否在当前路径下新加一层schema,eg：fase路径com.oop.eksp.user.model， true:com.oop.eksp.user.model.[schemaName]
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>-->
+
+
+        <!-- 自动生成mapper接口, 可以是 ANNOTATEDMAPPER(注解), XMLMAPPER(xml), MIXEDMAPPER(不知道) -->
+        <javaClientGenerator type="ANNOTATEDMAPPER"
+                             targetPackage="${mybatis.type-aliases-package}.mapper"
+                             implementationPackage="${mybatis.type-aliases-package}.mapper.impl"
+                             targetProject="${entity.target.dir}">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+
+
+        <table tableName="%" ></table>
+
+	</context>
+</generatorConfiguration>  
